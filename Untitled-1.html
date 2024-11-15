@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Piano for Soumyashree's Birthday</title>
+  <style>
+    /* Page styling */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    /* Piano styling */
+    .piano {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .key {
+      width: 50px;
+      height: 200px;
+      margin: 2px;
+      background-color: white;
+      border: 1px solid black;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .key:active {
+      background-color: #ccc;
+    }
+
+    .black-key {
+      width: 30px;
+      height: 140px;
+      background-color: black;
+      position: absolute;
+      left: 30px;
+      z-index: 1;
+    }
+
+    .key-label {
+      position: absolute;
+      bottom: 5px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* Message styling */
+    .birthday-message {
+      font-size: 24px;
+      color: #ff6347;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    /* Button styling */
+    .play-song-btn, .link-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+
+    .play-song-btn {
+      background-color: #ff6347;
+    }
+
+    .play-song-btn:hover {
+      background-color: #ff4500;
+    }
+
+    .link-btn {
+      background-color: #28a745;
+    }
+
+    .link-btn:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Virtual Piano for Soumyashree's Birthday</h1>
+<p class="birthday-message">Happy Birthday, Soumyashree! 🎉🎂🎶</p>
+
+<div class="piano">
+  <div class="key" id="C"><div class="key-label">C</div></div>
+  <div class="key black-key" id="C-sharp"></div>
+  <div class="key" id="D"><div class="key-label">D</div></div>
+  <div class="key black-key" id="D-sharp"></div>
+  <div class="key" id="E"><div class="key-label">E</div></div>
+  <div class="key" id="F"><div class="key-label">F</div></div>
+  <div class="key black-key" id="F-sharp"></div>
+  <div class="key" id="G"><div class="key-label">G</div></div>
+  <div class="key black-key" id="G-sharp"></div>
+  <div class="key" id="A"><div class="key-label">A</div></div>
+  <div class="key black-key" id="A-sharp"></div>
+  <div class="key" id="B"><div class="key-label">B</div></div>
+  <div class="key" id="C2"><div class="key-label">C</div></div>
+</div>
+
+<!-- Play song button -->
+<button class="play-song-btn" onclick="playSong()">Play Birthday Song</button>
+
+<!-- Link button for OneDrive special message -->
+<a href="https://1drv.ms/u/c/a0220e54ca47392b/EZv1-I11FKdAtchd6kiKVCcBxV49ErDkkmsfWkcB0VR3zw?e=FwEMYI" target="_blank">
+  <button class="link-btn">Click here to view special message</button>
+</a>
+
+<script>
+  // Sound files for each key
+  const keySounds = {
+    'c': 'https://www.soundjay.com/button/beep-07.wav',
+    'c-sharp': 'https://www.soundjay.com/button/beep-08.wav',
+    'D': 'https://www.soundjay.com/button/beep-09.wav',
+    'D-sharp': 'https://www.soundjay.com/button/beep-10.wav',
+    'E': 'https://www.soundjay.com/button/beep-11.wav',
+    'F': 'https://www.soundjay.com/button/beep-12.wav',
+    'F-sharp': 'https://www.soundjay.com/button/beep-13.wav',
+    'G': 'https://www.soundjay.com/button/beep-14.wav',
+    'G-sharp': 'https://www.soundjay.com/button/beep-15.wav',
+    'A': 'https://www.soundjay.com/button/beep-16.wav',
+    'A-sharp': 'https://www.soundjay.com/button/beep-17.wav',
+    'B': 'https://www.soundjay.com/button/beep-18.wav',
+    'C2': 'https://www.soundjay.com/button/beep-19.wav'
+  };
+
+  // Play sound function
+  function playSound(key) {
+    const audio = new Audio(keySounds[key]);
+    audio.play();
+  }
+
+  // Add click event to each key
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => {
+    key.addEventListener('click', () => {
+      playSound(key.id);
+    });
+  });
+
+  // Map keyboard keys to piano keys
+  const keyMapping = {
+    'a': 'C', 'w': 'C-sharp', 's': 'D', 'e': 'D-sharp', 'd': 'E',
+    'f': 'F', 't': 'F-sharp', 'g': 'G', 'y': 'G-sharp', 'h': 'A',
+    'u': 'A-sharp', 'j': 'B', 'k': 'C2'
+  };
+
+  // Add keyboard interaction
+  document.addEventListener('keydown', (event) => {
+    const key = event.key.toLowerCase();
+    if (keyMapping[key]) {
+      playSound(keyMapping[key]);
+    }
+  });
+
+  // Play a simple song (e.g., "Twinkle Twinkle Little Star")
+  function playSong() {
+    const songNotes = ['c', 'c', 'G', 'G', 'A', 'A', 'G', 'F', 'F', 'E', 'E', 'D', 'D', 'C'];
+    let delay = 0;
+
+    songNotes.forEach(note => {
+      setTimeout(() => {
+        playSound(note);
+      }, delay);
+      delay += 500; // Delay between notes
+    });
+  }
+</script>
+
+</body>
+</html>
